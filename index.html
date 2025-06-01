@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Islamic Revelation: Interactive Learning Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F0F4F8; color: #1E293B; }
+        .primary-blue { color: #005A9C; }
+        .bg-primary-blue { background-color: #005A9C; }
+        .border-primary-blue { border-color: #005A9C; }
+        .secondary-blue { color: #0078D4; }
+        .bg-secondary-blue { background-color: #0078D4; }
+        .accent-orange { color: #F76900; }
+        .bg-accent-orange { background-color: #F76900; }
+        .border-accent-orange { border-color: #F76900; }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); padding: 1.5rem; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; display: flex; flex-direction: column; } /* Added flex properties */
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+        .card-link { display: flex; flex-direction: column; flex-grow: 1; text-decoration: none; color: inherit; } /* Added flex properties */
+        .card-description { flex-grow: 1; margin-bottom: 1rem; } /* Added flex-grow and margin-bottom */
+        .action-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700; /* Bolder text */
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            background-color: #0078D4; /* Secondary Blue for action */
+            color: white;
+            display: inline-block; /* Ensure padding works */
+            width: 100%; /* Full width within card */
+            text-align: center;
+        }
+        .action-button:hover {
+            background-color: #005A9C; /* Darker blue on hover */
+            transform: scale(1.02); /* Slight scale for interaction */
+        }
+        .card-icon {
+            font-size: 2.5rem; /* Large icon size */
+            color: #F76900; /* Accent orange for icons */
+            margin-bottom: 0.75rem; /* Space below icon */
+            display: block; /* Ensure margin works */
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-center primary-blue mb-6">Explore Early Islamic Revelation</h1>
+        <p class="text-lg text-center text-gray-700 mb-12 max-w-3xl mx-auto">Dive deeper into the foundational events of Prophet Muhammad's (PBUH) prophethood with these interactive learning tools.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div class="card">
+                <a href="SPA.html" class="card-link">
+                    <span class="card-icon">🌟</span>
+                    <h3 class="text-2xl font-semibold primary-blue mb-2">Full SPA: Dawn of Prophethood</h3>
+                    <p class="text-gray-600 text-sm card-description">A comprehensive single-page application providing an in-depth, interactive exploration of the early revelations.</p>
+                    <div class="action-button">Launch SPA</div>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="Infographic.html" class="card-link">
+                    <span class="card-icon">📊</span>
+                    <h3 class="text-2xl font-semibold primary-blue mb-2">Infographic: Genesis of Prophethood</h3>
+                    <p class="text-gray-600 text-sm card-description">A comprehensive single-page infographic presenting complex data and narrative flow on the early revelations.</p>
+                    <div class="action-button">View Infographic</div>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="An Interactive Timeline.html" class="card-link">
+                    <span class="card-icon">⏳</span>
+                    <h3 class="text-2xl font-semibold primary-blue mb-2">Interactive Timeline</h3>
+                    <p class="text-gray-600 text-sm card-description">Explore the chronological sequence of pivotal events and key revelations in an interactive timeline.</p>
+                    <div class="action-button">View Timeline</div>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="Character Profile Explorer.html" class="card-link">
+                    <span class="card-icon">👥</span>
+                    <h3 class="text-2xl font-semibold primary-blue mb-2">Character Profile Explorer</h3>
+                    <p class="text-gray-600 text-sm card-description">Discover detailed profiles of the central figures involved in the early events of divine revelation.</p>
+                    <div class="action-button">View Profiles</div>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="Concept & Terminology Map Builder.html" class="card-link">
+                    <span class="card-icon">🧠</span>
+                    <h3 class="text-2xl font-semibold primary-blue mb-2">Concept Map Builder</h3>
+                    <p class="text-gray-600 text-sm card-description">Visualize and interlink core Islamic terms and concepts related to revelation in a dynamic map.</p>
+                    <div class="action-button">Build Concept Map</div>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="Role-Play Simulator.html" class="card-link">
+                    <span class="card-icon">🎭</span>
+                    <h3 class="text-2xl font-semibold primary-blue mb-2">Heraclius's Inquiry Role-Play</h3>
+                    <p class="text-gray-600 text-sm card-description">Engage in a text-based role-play of the historical inquiry between Emperor Heraclius and Abu Sufyan.</p>
+                    <div class="action-button">Start Role-Play</div>
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="Modalities of Wahy.html" class="card-link">
+                    <span class="card-icon">💡</span>
+                    <h3 class="text-2xl font-semibold primary-blue mb-2">Modalities of Wahy Guide</h3>
+                    <p class="text-gray-600 text-sm card-description">An interactive guide exploring the diverse forms and experiences of divine revelation to Prophet Muhammad (PBUH).</p>
+                    <div class="action-button">Explore Modalities</div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="bg-primary-blue text-white text-center py-6 mt-12">
+        <p>&copy; <span id="currentYear"></span> Interactive Learning Suite. All rights reserved.</p>
+        <p class="text-xs opacity-75 mt-1">Content based on Sahih al-Bukhari, Kitab Bad' al-Wahy.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

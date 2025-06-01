@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concept & Terminology Map Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F0F4F8; color: #1E293B; /* Removed overflow: hidden; */ }
+        .primary-blue { color: #005A9C; }
+        .bg-primary-blue { background-color: #005A9C; }
+        .border-primary-blue { border-color: #005A9C; }
+        .secondary-blue { color: #0078D4; }
+        .bg-secondary-blue { background-color: #0078D4; }
+        .accent-orange { color: #F76900; }
+        .bg-accent-orange { background-color: #F76900; }
+        .border-accent-orange { border-color: #F76900; }
+        .map-container { position: relative; width: 100%; height: calc(100vh - 120px); /* Adjust height for header/footer */ border: 2px solid #D1D5DB; border-radius: 0.75rem; overflow: auto; /* Changed from hidden to auto */ background-color: white; }
+        .concept-node { position: absolute; background-color: #E0F2F7; border: 2px solid #0078D4; border-radius: 0.75rem; padding: 1rem; text-align: center; cursor: grab; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); transition: box-shadow 0.2s ease-in-out, border-color 0.2s ease-in-out; min-width: 150px; max-width: 200px; user-select: none; z-index: 10; }
+        .concept-node:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+        .concept-node.dragging { cursor: grabbing; z-index: 20; }
+        .concept-node.highlighted { border-color: #F76900; box-shadow: 0 0 0 4px rgba(247, 105, 0, 0.5); }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content { background-color: white; padding: 2rem; border-radius: 0.75rem; max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 25px rgba(0,0,0,0.3); }
+        .arabic-text { font-size: 1.1rem; line-height: 1.8; direction: rtl; font-family: 'Noto Naskh Arabic', serif; margin-top: 0.5rem; margin-bottom: 0.5rem; color: #4A5568; }
+        .relationship-line { position: absolute; height: 2px; background-color: #0078D4; transform-origin: 0 0; z-index: 5; transition: background-color 0.2s ease-in-out; }
+        .relationship-line.highlighted { background-color: #F76900; }
+        .relationship-line::after { content: ''; position: absolute; width: 0; height: 0; border-style: solid; border-width: 6px 0 6px 10px; border-color: transparent transparent transparent #0078D4; right: -10px; top: -5px; transform-origin: center center; transform: rotate(0deg); transition: border-color 0.2s ease-in-out; }
+        .relationship-line.highlighted::after { border-color: transparent transparent transparent #F76900; }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-center primary-blue mb-6">Concept & Terminology Map Builder</h1>
+        <p class="text-lg text-center text-gray-700 mb-8 max-w-3xl mx-auto">Drag the concept nodes to arrange them. Click on any node to view its definition, relevant quotes, and explore its relationships with other concepts.</p>
+
+        <div id="map-container" class="map-container">
+            </div>
+    </div>
+
+    <div id="concept-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-concept-name" class="text-3xl font-bold primary-blue mb-2"></h3>
+            <p id="modal-concept-description" class="text-gray-700 mb-4 leading-relaxed"></p>
+            
+            <div id="modal-concept-quotes" class="bg-gray-50 p-4 rounded-lg border-l-4 border-accent-orange mb-4">
+                <p class="font-semibold accent-orange mb-2">Relevant Quote:</p>
+                <p id="modal-quote-en" class="italic text-gray-700 mb-2"></p>
+                <p id="modal-quote-ar" class="arabic-text"></p>
+                <p id="modal-quote-source" class="text-sm text-gray-500 mt-2"></p>
+            </div>
+
+            <h4 class="text-xl font-semibold secondary-blue mb-2">Related Concepts:</h4>
+            <div id="related-concepts-list" class="space-y-2 mb-4">
+                </div>
+            <p id="relationship-description" class="text-gray-700 italic text-sm mt-2 hidden"></p>
+
+            <button onclick="closeModal()" class="mt-6 px-6 py-3 bg-accent-orange text-white rounded-md hover:bg-orange-700 transition-colors duration-200">Close</button>
+        </div>
+    </div>
+
+    <footer class="bg-primary-blue text-white text-center py-4 mt-8">
+        <p>&copy; <span id="currentYear"></span> Concept & Terminology Map Builder. All rights reserved.</p>
+        <p class="text-xs opacity-75 mt-1">Content based on Sahih al-Bukhari, Kitab Bad' al-Wahy.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const concepts = {
+            "wahy": {
+                name: "Wahy (Divine Revelation)",
+                description: "The unique and authoritative communication from Allah to His chosen prophets, serving as the direct conduit for transmitting divine will, guidance, and scripture to humanity.",
+                references: {
+                    en: "Verily, We have sent the revelation to you (O Muhammad) as We sent the revelation to Noah and the Prophets after him.",
+                    ar: "إِنَّا أَوْحَيْنَا إِلَيْكَ كَمَا أَوْحَيْنَا إِلَى نُوحٍ وَالنَّبِيِّينَ مِنْ بَعْدِهِ",
+                    source: "Qur'an 4:163"
+                },
+                position: { x: 350, y: 50 } // Increased Y to avoid header overlap
+            },
+            "niyyah": {
+                name: "Niyyah (Intention)",
+                description: "The sincere purpose or resolve in the heart behind an action. Its placement as the first Hadith in Sahih al-Bukhari emphasizes its foundational importance for all deeds, including receiving revelation.",
+                references: {
+                    en: "The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended.",
+                    ar: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
+                    source: "Sahih al-Bukhari 1"
+                },
+                position: { x: 100, y: 200 }
+            },
+            "fatrah": {
+                name: "Fatrah (Pause in Revelation)",
+                description: "A temporary cessation or pause in divine revelation. This interlude, while initially distressing, served a crucial purpose in spiritual consolidation and intensified longing for divine connection.",
+                references: {
+                    en: "The Divine Inspiration was paused for a while, and the Prophet (PBUH) became sad.",
+                    ar: "فَتَرَ الْوَحْيُ فَتْرَةً حَتَّى حَزِنَ النَّبِيُّ صلى الله عليه وسلم",
+                    source: "Sahih al-Bukhari"
+                },
+                position: { x: 600, y: 200 }
+            },
+            "angel-gabriel": {
+                name: "Angel Gabriel (Jibril)",
+                description: "The chief angel of revelation, designated by Allah to convey messages to His prophets. He appeared to Prophet Muhammad (PBUH) in the Cave of Hira and on other occasions.",
+                references: {
+                    en: "This is the same one who keeps the secrets (angel Gabriel) whom Allah had sent to Moses.",
+                    ar: "هَذَا النَّامُوسُ الَّذِي نَزَّلَ اللَّهُ عَلَى مُوسَى",
+                    source: "(Waraqa's words, Sahih al-Bukhari)"
+                },
+                position: { x: 350, y: 350 }
+            },
+            "prophethood": {
+                name: "Prophethood (Nubuwwah)",
+                description: "The divine office of a prophet, a chosen individual tasked by Allah to guide humanity. Prophet Muhammad (PBUH) is the final prophet in a long line of messengers.",
+                references: {
+                    en: "All Apostles come from noble families amongst their respective peoples.",
+                    ar: "",
+                    source: "(Heraclius's deduction, Sahih al-Bukhari)"
+                },
+                position: { x: 100, y: 500 }
+            },
+            "sunnah": {
+                name: "Sunnah (Prophetic Tradition)",
+                description: "The practices, teachings, and approvals of Prophet Muhammad (PBUH), serving as a secondary source of Islamic law and guidance after the Qur'an. It is a practical embodiment of Wahy.",
+                references: {
+                    en: "The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended.",
+                    ar: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
+                    source: "Sahih al-Bukhari 1"
+                },
+                position: { x: 600, y: 500 }
+            }
+        };
+
+        const relationships = [
+            { from: "wahy", to: "niyyah", description: "Wahy, and all deeds stemming from it, must be rooted in pure intention.", type: "fundamental" },
+            { from: "wahy", to: "angel-gabriel", description: "Angel Gabriel is the primary conduit through which Wahy was delivered to Prophet Muhammad.", type: "conduit" },
+            { from: "wahy", to: "fatrah", description: "Wahy experienced a temporary pause (Fatrah), which served a purpose in the Prophet's spiritual journey.", type: "event" },
+            { from: "angel-gabriel", to: "prophethood", description: "Angel Gabriel's appearance and delivery of Wahy directly confirmed Prophet Muhammad's prophethood.", type: "confirmation" },
+            { from: "prophethood", to: "sunnah", description: "The Sunnah is the practical manifestation and explanation of the Wahy received through prophethood.", type: "manifestation" },
+            { from: "fatrah", to: "prophethood", description: "The resumption of revelation after Fatrah marked the public commencement of Prophet Muhammad's prophethood.", type: "catalyst" },
+            { from: "niyyah", to: "prophethood", description: "Pure intention (Niyyah) is a foundational principle underlying the Prophet's mission and the acceptance of prophethood.", type: "foundation" },
+            { from: "sunnah", to: "wahy", description: "The Sunnah clarifies and elaborates upon the Wahy (Qur'an).", type: "clarification" }
+        ];
+
+        const mapContainer = document.getElementById('map-container');
+        const modal = document.getElementById('concept-modal');
+        const modalConceptName = document.getElementById('modal-concept-name');
+        const modalConceptDescription = document.getElementById('modal-concept-description');
+        const modalQuoteEn = document.getElementById('modal-quote-en');
+        const modalQuoteAr = document.getElementById('modal-quote-ar');
+        const modalQuoteSource = document.getElementById('modal-quote-source');
+        const relatedConceptsList = document.getElementById('related-concepts-list');
+        const relationshipDescription = document.getElementById('relationship-description');
+
+        let activeNode = null;
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        function renderMap() {
+            mapContainer.innerHTML = ''; // Clear existing nodes and lines
+
+            // Render nodes
+            for (const key in concepts) {
+                const concept = concepts[key];
+                const node = document.createElement('div');
+                node.id = `node-${key}`;
+                node.classList.add('concept-node');
+                node.style.left = `${concept.position.x}px`;
+                node.style.top = `${concept.position.y}px`;
+                node.innerHTML = `<h4 class="font-semibold text-lg secondary-blue">${concept.name}</h4>`;
+                node.dataset.conceptId = key;
+
+                node.addEventListener('mousedown', (e) => {
+                    isDragging = true;
+                    activeNode = node;
+                    offsetX = e.clientX - node.getBoundingClientRect().left;
+                    offsetY = e.clientY - node.getBoundingClientRect().top;
+                    node.classList.add('dragging');
+                    e.preventDefault(); // Prevent default drag behavior
+                });
+
+                node.addEventListener('click', (e) => {
+                    if (!isDragging) { // Only open modal if not dragging
+                        showConceptModal(key);
+                    }
+                });
+                mapContainer.appendChild(node);
+            }
+
+            // Render relationship lines (initial static render)
+            relationships.forEach(rel => {
+                const fromNode = concepts[rel.from];
+                const toNode = concepts[rel.to];
+                if (fromNode && toNode) {
+                    drawConnectionLine(fromNode.position, toNode.position, rel.from, rel.to);
+                }
+            });
+        }
+
+        function drawConnectionLine(pos1, pos2, fromId, toId) {
+            const line = document.createElement('div');
+            line.classList.add('relationship-line');
+            line.dataset.from = fromId;
+            line.dataset.to = toId;
+
+            const x1 = pos1.x + 100; // Center of node (assuming 200px width)
+            const y1 = pos1.y + 30;  // Center of node (assuming 60px height)
+            const x2 = pos2.x + 100;
+            const y2 = pos2.y + 30;
+
+            const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+            const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+
+            line.style.width = `${length}px`;
+            line.style.transform = `rotate(${angle}deg)`;
+            line.style.left = `${x1}px`;
+            line.style.top = `${y1}px`;
+
+            // Adjust arrow direction based on angle
+            const arrow = line.querySelector('.relationship-line::after');
+            if (arrow) {
+                arrow.style.transform = `rotate(${-angle}deg)`; // Counter-rotate arrow
+            }
+            
+            mapContainer.appendChild(line);
+        }
+
+        function updateConnectionLines() {
+            // Remove existing lines
+            document.querySelectorAll('.relationship-line').forEach(line => line.remove());
+
+            // Redraw lines based on current node positions
+            relationships.forEach(rel => {
+                const fromNode = concepts[rel.from];
+                const toNode = concepts[rel.to];
+                if (fromNode && toNode) {
+                    drawConnectionLine(fromNode.position, toNode.position, rel.from, rel.to);
+                }
+            });
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging || !activeNode) return;
+
+            const mapRect = mapContainer.getBoundingClientRect();
+            let newX = e.clientX - mapRect.left - offsetX;
+            let newY = e.clientY - mapRect.top - offsetY;
+
+            // Constrain movement within map boundaries
+            newX = Math.max(0, Math.min(newX, mapRect.scrollWidth - activeNode.offsetWidth));
+            newY = Math.max(0, Math.min(newY, mapRect.scrollHeight - activeNode.offsetHeight));
+
+            activeNode.style.left = `${newX}px`;
+            activeNode.style.top = `${newY}px`;
+
+            concepts[activeNode.dataset.conceptId].position.x = newX;
+            concepts[activeNode.dataset.conceptId].position.y = newY;
+
+            updateConnectionLines();
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isDragging && activeNode) {
+                activeNode.classList.remove('dragging');
+                activeNode = null;
+                isDragging = false;
+            }
+        });
+
+        function showConceptModal(conceptId) {
+            const concept = concepts[conceptId];
+            if (!concept) return;
+
+            modalConceptName.textContent = concept.name; // Fixed: Changed 'data.name' to 'concept.name'
+            modalConceptDescription.textContent = concept.description; // Fixed: Changed 'data.description' to 'concept.description'
+            modalQuoteEn.textContent = concept.references.en || 'N/A'; // Fixed: Changed 'data.references.en' to 'concept.references.en'
+            modalQuoteAr.textContent = concept.references.ar || 'N/A'; // Fixed: Changed 'data.references.ar' to 'concept.references.ar'
+            modalQuoteSource.textContent = concept.references.source || 'N/A'; // Fixed: Changed 'data.references.source' to 'concept.references.source'
+
+            relatedConceptsList.innerHTML = '';
+            relationshipDescription.classList.add('hidden'); // Hide relationship description initially
+
+            const related = relationships.filter(r => r.from === conceptId || r.to === conceptId);
+            if (related.length > 0) {
+                related.forEach(rel => {
+                    const relatedConceptId = rel.from === conceptId ? rel.to : rel.from;
+                    const relatedConcept = concepts[relatedConceptId];
+                    if (relatedConcept) {
+                        const listItem = document.createElement('div');
+                        listItem.classList.add('p-2', 'bg-gray-100', 'rounded-md', 'cursor-pointer', 'hover:bg-gray-200', 'transition-colors');
+                        listItem.textContent = relatedConcept.name;
+                        listItem.dataset.relatedConceptId = relatedConceptId;
+                        listItem.dataset.relationshipFrom = rel.from; // Store for highlighting
+                        listItem.dataset.relationshipTo = rel.to;     // Store for highlighting
+                        listItem.dataset.relationshipDesc = rel.description;
+
+                        listItem.addEventListener('click', (e) => {
+                            const targetRelFrom = e.target.dataset.relationshipFrom;
+                            const targetRelTo = e.target.dataset.relationshipTo;
+                            const targetRelDesc = e.target.dataset.relationshipDesc;
+
+                            highlightNodesAndRelationship(targetRelFrom, targetRelTo, targetRelDesc);
+                        });
+                        relatedConceptsList.appendChild(listItem);
+                    }
+                });
+            } else {
+                relatedConceptsList.innerHTML = '<p class="text-gray-500">No direct relationships defined for this concept.</p>';
+            }
+
+            // Highlight the current node
+            document.querySelectorAll('.concept-node').forEach(node => node.classList.remove('highlighted'));
+            document.getElementById(`node-${conceptId}`).classList.add('highlighted');
+            
+            // Clear previous relationship highlights
+            document.querySelectorAll('.relationship-line').forEach(line => line.classList.remove('highlighted'));
+
+
+            modal.classList.add('active');
+        }
+
+        function highlightNodesAndRelationship(fromId, toId, description) {
+            // Remove all previous highlights
+            document.querySelectorAll('.concept-node').forEach(node => node.classList.remove('highlighted'));
+            document.querySelectorAll('.relationship-line').forEach(line => line.classList.remove('highlighted'));
+
+            // Highlight the two connected nodes
+            document.getElementById(`node-${fromId}`).classList.add('highlighted');
+            document.getElementById(`node-${toId}`).classList.add('highlighted');
+
+            // Highlight the specific connecting line
+            document.querySelectorAll('.relationship-line').forEach(line => {
+                if ((line.dataset.from === fromId && line.dataset.to === toId) ||
+                    (line.dataset.from === toId && line.dataset.to === fromId)) { // Check both directions
+                    line.classList.add('highlighted');
+                }
+            });
+
+            // Display relationship description
+            relationshipDescription.textContent = description;
+            relationshipDescription.classList.remove('hidden');
+        }
+
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.querySelectorAll('.concept-node').forEach(node => node.classList.remove('highlighted'));
+            document.querySelectorAll('.relationship-line').forEach(line => line.classList.remove('highlighted'));
+            relationshipDescription.classList.add('hidden');
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Initial render
+        renderMap();
+    </script>
+</body>
+</html>

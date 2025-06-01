@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Role-Play Simulator: Heraclius's Inquiry</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F0F4F8; color: #1E293B; }
+        .primary-blue { color: #005A9C; }
+        .bg-primary-blue { background-color: #005A9C; }
+        .border-primary-blue { border-color: #005A9C; }
+        .secondary-blue { color: #0078D4; }
+        .bg-secondary-blue { background-color: #0078D4; }
+        .accent-orange { color: #F76900; }
+        .bg-accent-orange { background-color: #F76900; }
+        .border-accent-orange { border-color: #F76900; }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); padding: 1.5rem; margin-bottom: 1.5rem; }
+        .btn { padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; transition: background-color 0.2s ease-in-out; }
+        .btn-primary { background-color: #0078D4; color: white; }
+        .btn-primary:hover { background-color: #005A9C; }
+        .btn-accent { background-color: #F76900; color: white; }
+        .btn-accent:hover { background-color: #E06000; }
+        .btn-secondary { background-color: #E0E7EB; color: #1E293B; }
+        .btn-secondary:hover { background-color: #CBD5E1; }
+        .arabic-text { font-size: 1.1rem; line-height: 1.8; direction: rtl; font-family: 'Noto Naskh Arabic', serif; margin-top: 0.5rem; margin-bottom: 0.5rem; color: #4A5568; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-center primary-blue mb-6">Role-Play Simulator: Heraclius's Inquiry</h1>
+        <p class="text-lg text-center text-gray-700 mb-8 max-w-3xl mx-auto">Step into the shoes of either Emperor Heraclius or Abu Sufyan and relive the pivotal exchange that validated Prophet Muhammad's (PBUH) prophethood.</p>
+
+        <div id="start-screen" class="card max-w-2xl mx-auto text-center">
+            <h2 class="text-2xl font-semibold primary-blue mb-4">Choose Your Role:</h2>
+            <p class="mb-6 text-gray-700">Decide whether you want to play as the astute inquirer, Emperor Heraclius, or the truthful testifier, Abu Sufyan.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="play-heraclius" class="btn btn-primary">Play as Heraclius</button>
+                <button id="play-abu-sufyan" class="btn btn-primary">Play as Abu Sufyan</button>
+            </div>
+        </div>
+
+        <div id="roleplay-screen" class="hidden max-w-3xl mx-auto">
+            <div class="card">
+                <p id="role-indicator" class="text-sm font-semibold text-accent-orange mb-3"></p>
+                
+                <h3 class="text-2xl font-semibold secondary-blue mb-4">Question <span id="question-number">1</span>:</h3>
+                <p id="current-question" class="text-xl text-gray-800 mb-6"></p>
+
+                <div id="user-prompt-section" class="mb-6">
+                    <p id="user-prompt" class="italic text-gray-600"></p>
+                </div>
+
+                <div id="reveal-button-section" class="text-center mb-6">
+                    <button id="reveal-answer-btn" class="btn btn-accent">Reveal Answer & Deduction</button>
+                </div>
+
+                <div id="revealed-content" class="hidden">
+                    <div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 mb-4">
+                        <h4 class="font-semibold secondary-blue mb-2">Abu Sufyan's Truthful Answer:</h4>
+                        <p id="abu-sufyan-answer" class="text-gray-800"></p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500 mb-6">
+                        <h4 class="font-semibold accent-orange mb-2">Heraclius's Deduction:</h4>
+                        <p id="heraclius-deduction" class="text-gray-800"></p>
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-4">
+                    <button id="restart-btn" class="btn btn-secondary">Restart Role-Play</button>
+                    <button id="next-question-btn" class="btn btn-primary hidden">Next Question &raquo;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-primary-blue text-white text-center py-6 mt-12">
+        <p>&copy; <span id="currentYear"></span> Heraclius's Inquiry Role-Play Simulator.</p>
+        <p class="text-xs opacity-75 mt-1">Content based on Sahih al-Bukhari, Kitab Bad' al-Wahy.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const inquiryData = [
+            {
+                question: "What is his family status amongst you?",
+                abuSufyanAnswer: "He belongs to a good (noble) family amongst us.",
+                heracliusDeduction: "All Apostles come from noble families amongst their respective peoples."
+            },
+            {
+                question: "Has anybody amongst you ever claimed the same (i.e. to be a Prophet) before him?",
+                abuSufyanAnswer: "No.",
+                heracliusDeduction: "If yes, he would be following a previous statement."
+            },
+            {
+                question: "Was anybody amongst his ancestors a king?",
+                abuSufyanAnswer: "No.",
+                heracliusDeduction: "If yes, he would be seeking his ancestral kingdom."
+            },
+            {
+                question: "Do the nobles or the poor follow him?",
+                abuSufyanAnswer: "It is the poor who follow him.",
+                heracliusDeduction: "All Apostles have been followed by this very class of people."
+            },
+            {
+                question: "Are his followers increasing or decreasing (day by day)?",
+                abuSufyanAnswer: "They are increasing.",
+                heracliusDeduction: "This is the way of true faith, till it is complete in all respects."
+            },
+            {
+                question: "Does anybody amongst those who embrace his religion become displeased and renounce the religion afterwards?",
+                abuSufyanAnswer: "No.",
+                heracliusDeduction: "This is (the sign of) true faith, when its delight enters the hearts and mixes with them completely."
+            },
+            {
+                question: "Have you ever accused him of telling lies before his claim (to be a Prophet)?",
+                abuSufyanAnswer: "No.",
+                heracliusDeduction: "A person who does not tell a lie about others could ever tell a lie about Allah."
+            },
+            {
+                question: "Does he break his promises?",
+                abuSufyanAnswer: "No.",
+                heracliusDeduction: "Likewise the Apostles never betray."
+            },
+            {
+                question: "What does he order you to do?",
+                abuSufyanAnswer: "To worship Allah and Allah alone, renounce ancestors' sayings, pray, speak truth, be chaste, keep good relations with kin.",
+                heracliusDeduction: "(Acknowledged these teachings as consistent with prophethood)."
+            }
+        ];
+
+        let currentRole = '';
+        let currentQuestionIndex = 0;
+
+        const startScreen = document.getElementById('start-screen');
+        const roleplayScreen = document.getElementById('roleplay-screen');
+        const playHeracliusBtn = document.getElementById('play-heraclius');
+        const playAbuSufyanBtn = document.getElementById('play-abu-sufyan');
+        const roleIndicator = document.getElementById('role-indicator');
+        const questionNumber = document.getElementById('question-number');
+        const currentQuestion = document.getElementById('current-question');
+        const userPrompt = document.getElementById('user-prompt');
+        const revealAnswerBtn = document.getElementById('reveal-answer-btn');
+        const revealedContent = document.getElementById('revealed-content');
+        const abuSufyanAnswer = document.getElementById('abu-sufyan-answer');
+        const heracliusDeduction = document.getElementById('heraclius-deduction');
+        const restartBtn = document.getElementById('restart-btn');
+        const nextQuestionBtn = document.getElementById('next-question-btn');
+
+        function startGame(role) {
+            currentRole = role;
+            currentQuestionIndex = 0;
+            startScreen.classList.add('hidden');
+            roleplayScreen.classList.remove('hidden');
+            roleIndicator.textContent = `Playing as: ${role === 'heraclius' ? 'Heraclius (The Inquirer)' : 'Abu Sufyan (The Testifier)'}`;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex < inquiryData.length) {
+                const data = inquiryData[currentQuestionIndex];
+                questionNumber.textContent = currentQuestionIndex + 1;
+                currentQuestion.textContent = data.question;
+
+                if (currentRole === 'heraclius') {
+                    userPrompt.textContent = "As Heraclius, consider what Abu Sufyan might truthfully answer based on Muhammad's character.";
+                } else { // abu sufyan
+                    userPrompt.textContent = "As Abu Sufyan, consider your truthful answer to Heraclius's question.";
+                }
+
+                revealedContent.classList.add('hidden');
+                revealAnswerBtn.classList.remove('hidden');
+                nextQuestionBtn.classList.add('hidden');
+            } else {
+                // End of questions
+                currentQuestion.textContent = "You have completed the inquiry! Well done.";
+                userPrompt.textContent = "Restart the role-play to go through the questions again.";
+                revealAnswerBtn.classList.add('hidden');
+                nextQuestionBtn.classList.add('hidden');
+                revealedContent.classList.add('hidden'); // Ensure content is hidden at end
+            }
+        }
+
+        function revealAnswer() {
+            const data = inquiryData[currentQuestionIndex];
+            abuSufyanAnswer.textContent = data.abuSufyanAnswer;
+            heracliusDeduction.textContent = data.heracliusDeduction;
+            revealedContent.classList.remove('hidden');
+            revealAnswerBtn.classList.add('hidden');
+            if (currentQuestionIndex < inquiryData.length - 1) {
+                nextQuestionBtn.classList.remove('hidden');
+            }
+        }
+
+        playHeracliusBtn.addEventListener('click', () => startGame('heraclius'));
+        playAbuSufyanBtn.addEventListener('click', () => startGame('abu-sufyan'));
+        revealAnswerBtn.addEventListener('click', revealAnswer);
+
+        nextQuestionBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            loadQuestion();
+        });
+
+        restartBtn.addEventListener('click', () => {
+            startScreen.classList.remove('hidden');
+            roleplayScreen.classList.add('hidden');
+            currentRole = '';
+            currentQuestionIndex = 0;
+        });
+
+    </script>
+</body>
+</html>

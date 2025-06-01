@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dawn of Prophethood: Early Revelations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Visualization & Content Choices:
+        - Wahy Intro: Text + Clickable definitions (Goal: Inform, Method: HTML/JS toggle, Justification: Quick access to key terms).
+        - Cave Hira: Narrative + HTML/CSS sequence diagram (Goal: Illustrate process, Method: HTML/JS click-to-reveal steps, Justification: Visual aid for complex event).
+        - Supporters: Text + Clickable character cards (Goal: Highlight key figures, Method: HTML/JS toggle, Justification: Focus on individual contributions).
+        - Modalities of Revelation: Interactive list/cards replacing static table (Goal: Organize/Compare, Method: HTML/JS toggle for details, Justification: Better UX than static table for exploration).
+        - Fatrah: Text + Comparative columns (Goal: Show change, Method: HTML layout, Justification: Clear contrast of pre/post Fatrah).
+        - Prophetic Character: Text + Virtue Carousel/List (Goal: Inform/Highlight, Method: HTML/JS click-to-reveal, Justification: Engaging way to present virtues).
+        - Heraclius's Inquiry: Interactive Q&A cards replacing static table (Goal: Explore dialogue, Method: HTML/JS click-to-reveal answer/deduction, Justification: More engaging than static table).
+        - No traditional charts (Chart.js/Plotly.js) are used as the source content is primarily narrative and descriptive, not quantitative data suitable for such charts. Interactions are built with HTML, CSS (Tailwind), and Vanilla JS.
+        -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter as a clean sans-serif font */
+        }
+        .active-nav {
+            color: #f59e0b; /* Amber 600 */
+            border-bottom: 2px solid #f59e0b;
+        }
+        .arabic-text {
+            font-size: 1.25em;
+            line-height: 1.8;
+            direction: rtl;
+            font-family: 'Noto Naskh Arabic', 'Times New Roman', serif; /* Common Arabic font, fallback */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #4a5568; /* Gray 700 */
+        }
+        .section-title {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* bold */
+            color: #1f2937; /* gray-800 */
+            margin-bottom: 1.5rem; /* mb-6 */
+            padding-bottom: 0.5rem; /* pb-2 */
+            border-bottom: 2px solid #d1d5db; /* border-gray-300 */
+        }
+        .content-card {
+            background-color: #ffffff;
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 1rem; /* mb-4 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            transition: all 0.3s ease-in-out;
+        }
+        .content-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+        }
+        .interactive-item {
+            cursor: pointer;
+            background-color: #f3f4f6; /* gray-100 */
+            border-left: 4px solid #f59e0b; /* amber-500 */
+        }
+        .interactive-item:hover {
+            background-color: #e5e7eb; /* gray-200 */
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .tab-button {
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            border-radius: 0.375rem;
+            background-color: #e5e7eb; /* gray-200 */
+            color: #374151; /* gray-700 */
+            transition: background-color 0.2s;
+        }
+        .tab-button.active {
+            background-color: #f59e0b; /* amber-500 */
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        /* Custom scrollbar for better aesthetics if desired */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c4c4c4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+    </style>
+</head>
+<body class="bg-stone-100 text-stone-800 antialiased">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <h1 class="text-xl sm:text-2xl font-bold text-amber-600">The Dawn of Prophethood</h1>
+                <nav class="hidden md:flex space-x-4">
+                    <a href="#intro-wahy" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Intro to Wahy</a>
+                    <a href="#cave-hira" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Cave Hira</a>
+                    <a href="#supporters" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Supporters</a>
+                    <a href="#modalities" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Modalities</a>
+                    <a href="#fatrah" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Fatrah</a>
+                    <a href="#character" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Character</a>
+                    <a href="#heraclius" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Heraclius</a>
+                </nav>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-stone-500 hover:text-amber-600 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#intro-wahy" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Intro to Wahy</a>
+                <a href="#cave-hira" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Cave Hira</a>
+                <a href="#supporters" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Supporters</a>
+                <a href="#modalities" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Modalities</a>
+                <a href="#fatrah" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Fatrah</a>
+                <a href="#character" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Character</a>
+                <a href="#heraclius" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-stone-700 hover:bg-amber-50 hover:text-amber-600">Heraclius</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <section id="intro-wahy" class="mb-12 scroll-mt-20">
+            <h2 class="section-title">The Concept and Significance of Wahy (Divine Revelation)</h2>
+            <div class="content-card">
+                <p class="mb-4 text-lg leading-relaxed">This application explores the profound beginnings of Prophet Muhammad's (peace be upon him) prophethood, focusing on the initial divine revelations as detailed in Sahih al-Bukhari. Understanding these foundational events is key to appreciating the core of Islamic teachings.</p>
+                <p class="mb-4">The bedrock of Islamic faith and practice rests upon the concept of <strong class="interactive-term text-amber-700" data-term="wahy">Wahy</strong>, or divine revelation. This term denotes the unique and authoritative communication from Allah to His chosen prophets, serving as the direct conduit for transmitting divine will, guidance, and scripture to humanity. Its paramount importance in the Islamic tradition cannot be overstated, as it is the very source from which the prophetic mission derives its legitimacy and the Qur'an its sacred origin.</p>
+                <div class="bg-amber-50 p-4 rounded-lg border-l-4 border-amber-500 mb-4">
+                    <p class="font-semibold text-amber-700">Qur'anic Context:</p>
+                    <p class="italic">"Verily, We have sent the revelation to you (O Muhammad) as We sent the revelation to Noah and the Prophets after him."</p>
+                    <p class="arabic-text" dir="rtl">إِنَّا أَوْحَيْنَا إِلَيْكَ كَمَا أَوْحَيْنَا إِلَى نُوحٍ وَالنَّبِيِّينَ مِنْ بَعْدِهِ</p>
+                    <p class="text-sm text-stone-600">(Qur'an 4:163)</p>
+                    <p class="mt-2">This verse immediately places Prophet Muhammad within a venerable lineage of divinely inspired messengers, establishing a <strong class="interactive-term text-amber-700" data-term="continuity">continuity of prophethood</strong> and suggesting a universal divine plan.</p>
+                </div>
+                <div class="bg-teal-50 p-4 rounded-lg border-l-4 border-teal-500">
+                    <p class="font-semibold text-teal-700">The Importance of Intention:</p>
+                    <p class="italic">"The reward of deeds depends upon the intentions and every person will get the reward according to what he has intended."</p>
+                     <p class="arabic-text" dir="rtl">إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى</p>
+                    <p class="text-sm text-stone-600">(Sahih al-Bukhari 1)</p>
+                    <p class="mt-2">The placement of this Hadith at the very beginning of Sahih al-Bukhari, after the introduction to revelation, suggests that the act of receiving and conveying divine revelation, and all actions based upon it, must be rooted in <strong class="interactive-term text-amber-700" data-term="intention">pure intention</strong> for Allah.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="cave-hira" class="mb-12 scroll-mt-20">
+            <h2 class="section-title">The Commencement of Prophethood: Events of Cave Hira</h2>
+            <div class="content-card">
+                <p class="mb-4">The formal commencement of Prophet Muhammad's (PBUH) prophethood is meticulously detailed through the events that transpired in the cave of Hira. This pivotal moment was preceded by a period of profound spiritual preparation.</p>
+                <p class="mb-4">Prior to the first revelation, Prophet Muhammad (PBUH) developed a deep inclination towards seclusion and solitary worship in the cave of Hira. This practice prepared him mentally and spiritually for the momentous divine communication.</p>
+                
+                <h3 class="text-xl font-semibold text-stone-700 mb-3 mt-6">The Encounter with Angel Gabriel:</h3>
+                <div class="space-y-4">
+                    <div class="p-4 rounded-md bg-stone-50 border border-stone-200 interactive-item" data-step="1">
+                        <p><strong class="text-amber-700">Step 1: The Command</strong> - While in seclusion in Hira, the Angel Gabriel came to him and asked him to "Read" (اقْرَأْ - Iqra').</p>
+                        <div class="step-detail hidden mt-2 p-3 bg-white rounded shadow">The Prophet (PBUH) replied, "I do not know how to read" (مَا أَنَا بِقَارِئٍ). This confirmed his illiteracy, making the subsequent revelation of scripture even more miraculous.</div>
+                    </div>
+                    <div class="p-4 rounded-md bg-stone-50 border border-stone-200 interactive-item" data-step="2">
+                        <p><strong class="text-amber-700">Step 2: The Pressing</strong> - The angel caught him forcefully and pressed him hard. This was repeated three times.</p>
+                        <div class="step-detail hidden mt-2 p-3 bg-white rounded shadow">Each time, the Prophet (PBUH) stated his inability to read. This intense physical experience signified the gravity and undeniable reality of the encounter.</div>
+                    </div>
+                    <div class="p-4 rounded-md bg-stone-50 border border-stone-200 interactive-item" data-step="3">
+                        <p><strong class="text-amber-700">Step 3: The First Verses</strong> - After the third pressing, the angel recited the first verses of the Qur'an:</p>
+                        <div class="step-detail hidden mt-2 p-3 bg-white rounded shadow">
+                            <p class="italic">"'Read in the name of your Lord, who has created (all that exists), created man from a clot. Read! And your Lord is the Most Generous.'"</p>
+                            <p class="arabic-text" dir="rtl">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ. خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ. اقْرَأْ وَرَبُّكَ الْأَكْرَمُ</p>
+                            <p class="text-sm text-stone-600">(Qur'an 96:1-3)</p>
+                            <p class="mt-1">These verses establish Allah's omnipotence, humanity's humble origin, and the importance of knowledge.</p>
+                        </div>
+                    </div>
+                     <div class="p-4 rounded-md bg-stone-50 border border-stone-200 interactive-item" data-step="4">
+                        <p><strong class="text-amber-700">Step 4: The Return</strong> - Prophet Muhammad (PBUH) returned to Khadija, his heart beating severely, and said, "Cover me! Cover me!"</p>
+                        <div class="step-detail hidden mt-2 p-3 bg-white rounded shadow">This highlighted the immense psychological and physical impact of the experience. Khadija's response was one of comfort and reassurance.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="supporters" class="mb-12 scroll-mt-20">
+            <h2 class="section-title">Pillars of Support: Khadija and Waraqa bin Naufal</h2>
+            <div class="content-card">
+                <p class="mb-4">The initial, overwhelming experience of divine revelation necessitated immediate and unwavering support for Prophet Muhammad (PBUH). His wife, Khadija bint Khuwailid, and her cousin, Waraqa bin Naufal, were instrumental in this critical phase.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-lg bg-amber-50 border border-amber-200">
+                        <h3 class="text-xl font-semibold text-amber-700 mb-2">Khadija bint Khuwailid (RA)</h3>
+                        <img src="https://placehold.co/300x200/FFF8E1/A0522D?text=Khadija+(RA)" alt="Symbolic representation of Khadija's support" class="rounded-md mb-3 w-full h-auto object-cover max-h-48">
+                        <p class="mb-2">When the Prophet (PBUH) expressed his fear, Khadija reassured him with profound faith:</p>
+                        <blockquote class="italic border-l-4 border-amber-500 pl-4 py-2 mb-2 text-stone-700">
+                            "Never! By Allah, Allah will never disgrace you. You keep good relations with your kith and kin, help the poor and the destitute, serve your guests generously and assist the deserving calamity-afflicted ones."
+                        </blockquote>
+                        <p>Her words provided crucial emotional and psychological anchoring, validating his experience through his exemplary character.</p>
+                         <button class="mt-3 text-sm text-amber-600 hover:text-amber-800 font-semibold focus:outline-none" onclick="toggleContent('khadija-details')">Read More &raquo;</button>
+                        <div id="khadija-details" class="hidden mt-2 text-sm text-stone-600">
+                            <p>Khadija's support was not just emotional; she proactively sought external validation by taking the Prophet (PBUH) to her cousin Waraqa. This demonstrates her wisdom and practical approach in the face of an unprecedented event. Her unwavering belief in his integrity and the divine nature of his experience was the first human comfort and confirmation he received.</p>
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-lg bg-teal-50 border border-teal-200">
+                        <h3 class="text-xl font-semibold text-teal-700 mb-2">Waraqa bin Naufal</h3>
+                        <img src="https://placehold.co/300x200/E0F2F1/004D40?text=Waraqa+bin+Naufal" alt="Symbolic representation of Waraqa's wisdom" class="rounded-md mb-3 w-full h-auto object-cover max-h-48">
+                        <p class="mb-2">A Christian scholar knowledgeable in Hebrew scriptures, Waraqa identified the angel as Gabriel (Jibril), the same one sent to Moses (Musa AS):</p>
+                        <blockquote class="italic border-l-4 border-teal-500 pl-4 py-2 mb-2 text-stone-700">
+                            "This is the same one who keeps the secrets (angel Gabriel) whom Allah had sent to Moses."
+                        </blockquote>
+                        <p>This linked the Prophet's (PBUH) experience to established prophetic tradition. Waraqa also foretold the opposition Muhammad (PBUH) would face and pledged his support.</p>
+                        <button class="mt-3 text-sm text-teal-600 hover:text-teal-800 font-semibold focus:outline-none" onclick="toggleContent('waraqa-details')">Read More &raquo;</button>
+                        <div id="waraqa-details" class="hidden mt-2 text-sm text-stone-600">
+                            <p>Waraqa's confirmation provided significant theological validation from a respected external source. His prophecy, "Anyone (man) who came with something similar to what you have brought was treated with hostility," prepared the Prophet (PBUH) for future challenges, offering a sense of historical precedent and solidarity. This interaction bridged understanding with the People of the Book.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="modalities" class="mb-12 scroll-mt-20">
+            <h2 class="section-title">Modalities of Divine Inspiration (Wahy)</h2>
+            <div class="content-card">
+                <p class="mb-6">Divine revelation to Prophet Muhammad (PBUH) manifested in various forms, each with distinct experiences. This multifaceted nature underscores its profound impact. Click on each form to learn more.</p>
+                <div id="modalities-tabs" class="mb-4">
+                    <button class="tab-button active" onclick="openTab(event, 'good-dreams')">Good Dreams</button>
+                    <button class="tab-button" onclick="openTab(event, 'ringing-bell')">Ringing of a Bell</button>
+                    <button class="tab-button" onclick="openTab(event, 'human-form')">Angel in Human Form</button>
+                    <button class="tab-button" onclick="openTab(event, 'voice-sky')">Voice from Sky</button>
+                    <button class="tab-button" onclick="openTab(event, 'gabriel-teaching')">Gabriel Teaching</button>
+                </div>
+
+                <div id="good-dreams" class="tab-content active p-4 bg-stone-50 rounded-md">
+                    <h4 class="font-semibold text-lg text-amber-700 mb-1">Good Dreams</h4>
+                    <p class="mb-1"><strong>Description:</strong> Came true like bright daylight; a gentle, preparatory introduction to Wahy.</p>
+                    <p class="mb-1"><strong>Experience:</strong> Spiritual clarity, less overwhelming.</p>
+                    <p class="text-sm text-stone-500">Narrated by 'Aisha (RA).</p>
+                </div>
+                <div id="ringing-bell" class="tab-content p-4 bg-stone-50 rounded-md">
+                    <h4 class="font-semibold text-lg text-amber-700 mb-1">Ringing of a Bell (صلصلة الجرس)</h4>
+                    <p class="mb-1"><strong>Description:</strong> The hardest form of inspiration; an intense auditory and sensory experience.</p>
+                    <p class="mb-1"><strong>Experience:</strong> Immense spiritual and physical burden. Prophet (PBUH) would sweat even on a very cold day. He would grasp what was inspired after the state passed.</p>
+                    <p class="text-sm text-stone-500">Described by Prophet Muhammad (PBUH), observed by 'Aisha (RA).</p>
+                </div>
+                <div id="human-form" class="tab-content p-4 bg-stone-50 rounded-md">
+                    <h4 class="font-semibold text-lg text-amber-700 mb-1">Angel in Human Form</h4>
+                    <p class="mb-1"><strong>Description:</strong> Angel Gabriel would appear as a man and talk directly to the Prophet (PBUH).</p>
+                    <p class="mb-1"><strong>Experience:</strong> Allowed for direct conversation and clear comprehension; more accessible reception.</p>
+                    <p class="text-sm text-stone-500">Described by Prophet Muhammad (PBUH), narrated by 'Aisha (RA).</p>
+                </div>
+                <div id="voice-sky" class="tab-content p-4 bg-stone-50 rounded-md">
+                    <h4 class="font-semibold text-lg text-amber-700 mb-1">Voice from the Sky</h4>
+                    <p class="mb-1"><strong>Description:</strong> The Prophet (PBUH) would hear a voice and sometimes see Angel Gabriel (e.g., on a chair between sky and earth, marking resumption after Fatrah).</p>
+                    <p class="mb-1"><strong>Experience:</strong> Could be initially frightening, prompting him to seek covering.</p>
+                    <p class="text-sm text-stone-500">Narrated by Jabir bin 'Abdullah Al-Ansari (RA).</p>
+                </div>
+                <div id="gabriel-teaching" class="tab-content p-4 bg-stone-50 rounded-md">
+                    <h4 class="font-semibold text-lg text-amber-700 mb-1">Gabriel Teaching the Qur'an</h4>
+                    <p class="mb-1"><strong>Description:</strong> Angel Gabriel used to meet the Prophet (PBUH) every night of Ramadan to teach him the Qur'an.</p>
+                    <p class="mb-1"><strong>Experience:</strong> A regular, structured process of divine instruction and review, ensuring accuracy and preservation.</p>
+                    <p class="text-sm text-stone-500">Narrated by Ibn 'Abbas (RA).</p>
+                </div>
+
+                <div class="mt-6 p-4 bg-teal-50 rounded-lg border-l-4 border-teal-500">
+                    <h4 class="font-semibold text-teal-700 mb-2">Divine Assurance for Preservation</h4>
+                    <p class="mb-2">The Prophet (PBUH) used to bear the revelation with great trouble and move his lips quickly. Allah then revealed:</p>
+                    <p class="italic">"'Move not your tongue concerning (the Qur'an) to make haste therewith. It is for Us to collect it and to give you (O Muhammad) the ability to recite it... Then it is for Us (Allah) to make it clear to you.'"</p>
+                    <p class="arabic-text" dir="rtl">لَا تُحَرِّكْ بِهِ لِسَانَكَ لِتَعْجَلَ بِهِ. إِنَّ عَلَيْنَا جَمْعَهُ وَقُرْآنَهُ. فَإِذَا قَرَأْنَاهُ فَاتَّبِعْ قُرْآنَهُ. ثُمَّ إِنَّ عَلَيْنَا بَيَانَهُ</p>
+                    <p class="text-sm text-stone-600">(Qur'an 75:16-19)</p>
+                    <p class="mt-2">This established a divine guarantee for the Qur'an's preservation and clarity, a cornerstone of Islamic faith.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="fatrah" class="mb-12 scroll-mt-20">
+            <h2 class="section-title">The Interlude and Resumption: Period of Fatrah</h2>
+            <div class="content-card">
+                <p class="mb-4">Following the initial revelations and Waraqa's passing, divine inspiration paused for a period known as <strong class="interactive-term text-amber-700" data-term="fatrah">Fatrah</strong>. This interlude, though initially distressing, served a crucial purpose.</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-4 bg-stone-50 rounded-lg">
+                        <h3 class="text-lg font-semibold text-stone-700 mb-2">The Pause (Fatrah)</h3>
+                        <p>This period created a longing for divine connection within the Prophet (PBUH), allowing him to consolidate the initial experience and appreciate the gift of Wahy. It was not abandonment but a time for spiritual strengthening.</p>
+                    </div>
+                    <div class="p-4 bg-amber-50 rounded-lg">
+                        <h3 class="text-lg font-semibold text-amber-700 mb-2">The Resumption</h3>
+                        <p>The Prophet (PBUH) recounted seeing the same angel from Hira on a chair between sky and earth. Though initially frightened, this signaled the end of Fatrah. Allah then revealed:</p>
+                        <p class="italic mt-2">"'O you (Muhammad)! wrapped up in garments! Arise and warn... and desert the idols.'"</p>
+                        <p class="arabic-text" dir="rtl">يَا أَيُّهَا الْمُدَّثِّرُ. قُمْ فَأَنذِرْ. وَرَبَّكَ فَكَبِّرْ. وَثِيَابَكَ فَطَهِّرْ. وَالرُّجْزَ فَاهْجُرْ</p>
+                        <p class="text-sm text-stone-600">(Qur'an 74:1-5)</p>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-teal-50 rounded-lg border-l-4 border-teal-500">
+                    <h4 class="font-semibold text-teal-700 mb-2">Shift in Mission</h4>
+                    <p>This marked a fundamental shift:
+                        <br><strong>Before Fatrah (Surah Al-Alaq):</strong> Personal command to "Read," focusing on receiving the message.
+                        <br><strong>After Fatrah (Surah Al-Muddaththir):</strong> Public command to "Arise and warn," initiating active proselytization and confronting idolatry.
+                    </p>
+                    <p class="mt-2">This highlighted the progression from individual preparation to societal transformation. Revelation then started coming strongly, frequently, and regularly.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="character" class="mb-12 scroll-mt-20">
+            <h2 class="section-title">The Exemplary Character of Prophet Muhammad (PBUH)</h2>
+            <div class="content-card">
+                <p class="mb-6">The Prophet's (PBUH) profound character was a testament to his prophethood, validated by both internal accounts and external non-Muslim testimonies. Click on each virtue to see supporting details.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-lg interactive-item" onclick="showModal('virtue-truthfulness')">
+                        <h4 class="font-semibold text-lg text-amber-700">Truthfulness & Honesty (الصِّدْق والأمانة)</h4>
+                        <p class="text-sm text-stone-600">Known as "Al-Amin" (the trustworthy) even before prophethood.</p>
+                    </div>
+                    <div class="p-4 rounded-lg interactive-item" onclick="showModal('virtue-reliability')">
+                        <h4 class="font-semibold text-lg text-amber-700">Reliability & Promise-Keeping</h4>
+                        <p class="text-sm text-stone-600">Never known to break a promise.</p>
+                    </div>
+                    <div class="p-4 rounded-lg interactive-item" onclick="showModal('virtue-generosity')">
+                        <h4 class="font-semibold text-lg text-amber-700">Generosity (الْكَرَم)</h4>
+                        <p class="text-sm text-stone-600">More generous than strong, uncontrollable wind, especially in Ramadan.</p>
+                    </div>
+                    <div class="p-4 rounded-lg interactive-item" onclick="showModal('virtue-compassion')">
+                        <h4 class="font-semibold text-lg text-amber-700">Compassion & Social Responsibility</h4>
+                        <p class="text-sm text-stone-600">Helped the poor, kith and kin, guests, and calamity-afflicted.</p>
+                    </div>
+                    <div class="p-4 rounded-lg interactive-item" onclick="showModal('virtue-humility')">
+                        <h4 class="font-semibold text-lg text-amber-700">Humility (التَّوَاضُع)</h4>
+                        <p class="text-sm text-stone-600">His response "I do not know how to read" showed genuine lack of pretense.</p>
+                    </div>
+                    <div class="p-4 rounded-lg interactive-item" onclick="showModal('virtue-resilience')">
+                        <h4 class="font-semibold text-lg text-amber-700">Resilience (الصَّبْر)</h4>
+                        <p class="text-sm text-stone-600">Endured the immense physical and spiritual burden of Wahy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="heraclius" class="mb-12 scroll-mt-20">
+            <h2 class="section-title">Heraclius's Inquiry: External Testimony</h2>
+            <div class="content-card">
+                <p class="mb-4">A compelling external validation of Prophet Muhammad's (PBUH) prophethood comes from the detailed interaction between Heraclius, the Byzantine Emperor, and Abu Sufyan (then an opponent of Islam). Heraclius, a learned ruler, posed incisive questions. Click each question to reveal the answer and Heraclius's deduction.</p>
+                <div class="space-y-3">
+                    <div id="heraclius-qna-container"></div>
+                </div>
+                 <div class="mt-6 p-4 bg-amber-50 rounded-lg border-l-4 border-amber-500">
+                    <h4 class="font-semibold text-amber-700 mb-2">Heraclius's Conclusion</h4>
+                    <p>Based on Abu Sufyan's truthful answers, Heraclius, with his scriptural knowledge, deduced Muhammad (PBUH) possessed prophetic characteristics. He stated:</p>
+                    <blockquote class="italic border-l-4 border-amber-400 pl-3 py-1 my-2 text-stone-700">
+                        "If what you have said is true, he will very soon occupy this place underneath my feet... if I could reach him definitely, I would go immediately to meet him and if I were with him, I would certainly wash his feet."
+                    </blockquote>
+                    <p>This powerful endorsement from a foreign, non-Muslim ruler significantly authenticates the Prophet's (PBUH) mission.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="scroll-mt-20">
+            <h2 class="section-title">Enduring Significance and Foundational Impact</h2>
+            <div class="content-card">
+                <p class="mb-4">The early revelations to Prophet Muhammad (PBUH), meticulously documented, hold profound and enduring significance. They establish the divine origin of the Islamic message, detail the methods of inspiration, highlight the Prophet's exemplary character, and lay the groundwork for the Qur'an's preservation.</p>
+                <p class="mb-4">The interplay of intense personal experiences (like in Cave Hira) with external validations (from Khadija, Waraqa, and even adversaries like Abu Sufyan via Heraclius) creates a robust framework affirming his prophethood. The divine assurance for the Qur'an's preservation (75:16-19) is a cornerstone of faith.</p>
+                <p class="mb-4">The transition from the personal command "Read!" to the public mandate "Arise and warn!" after the Fatrah period signifies the shift from individual spiritual preparation to a universal call to guidance. The human elements of fear and the need for reassurance make the prophetic journey relatable and his steadfastness even more remarkable.</p>
+                <p>These foundational narratives are not just historical accounts; they are a continuing source of guidance, inspiration, and affirmation for believers, forming the bedrock of Islamic faith and practice.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-stone-800 text-stone-300 py-8 text-center">
+        <p>&copy; <span id="currentYear"></span> Exploring Early Revelations. Based on Sahih al-Bukhari, Kitab Bad' al-Wahy.</p>
+        <p class="text-xs mt-1">This page is for educational and informational purposes.</p>
+    </footer>
+
+    <div id="term-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title" class="text-xl font-semibold text-amber-700 mb-3"></h3>
+            <p id="modal-definition" class="text-stone-700 mb-4"></p>
+            <button onclick="closeModal('term-modal')" class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700">Close</button>
+        </div>
+    </div>
+    
+    <div id="virtue-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="virtue-modal-title" class="text-xl font-semibold text-amber-700 mb-3"></h3>
+            <p id="virtue-modal-text" class="text-stone-700 mb-4"></p>
+            <button onclick="closeModal('virtue-modal')" class="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700">Close</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scroll for navigation links & active state
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Offset for sticky header
+                    const headerOffset = document.querySelector('header').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+                // Close mobile menu if open
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Active nav link highlighting on scroll
+        const sections = document.querySelectorAll('section');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const headerHeight = document.querySelector('header').offsetHeight;
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - headerHeight - 50; // Adjust offset as needed
+                if (pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active-nav');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active-nav');
+                }
+            });
+        });
+
+
+        // Interactive term definitions
+        const terms = {
+            wahy: { title: "Wahy (وَحْي)", definition: "Divine revelation; the unique and authoritative communication from Allah to His chosen prophets. It's the source of prophetic legitimacy and the Qur'an's origin." },
+            continuity: { title: "Continuity of Prophethood", definition: "The Islamic belief that Prophet Muhammad (PBUH) is part of a long line of prophets sent by Allah, including Noah, Abraham, Moses, and Jesus (peace be upon them all), all conveying the same core message of monotheism." },
+            intention: { title: "Intention (نِيَّة - Niyyah)", definition: "The sincere purpose or resolve in the heart behind an action. In Islam, the spiritual value and reward of an act are heavily dependent on the purity of one's intention for the sake of Allah." },
+            fatrah: { title: "Fatrah (فَتْرَة)", definition: "A temporary cessation or pause in divine revelation. This period, though potentially distressing, often served a divine purpose, such as spiritual consolidation for the Prophet or intensifying longing for divine connection." }
+        };
+
+        document.querySelectorAll('.interactive-term').forEach(item => {
+            item.addEventListener('click', () => {
+                const termKey = item.dataset.term;
+                if (terms[termKey]) {
+                    document.getElementById('modal-title').textContent = terms[termKey].title;
+                    document.getElementById('modal-definition').textContent = terms[termKey].definition;
+                    document.getElementById('term-modal').classList.add('active');
+                }
+            });
+        });
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', function (event) {
+            if (event.key === "Escape") {
+                closeModal('term-modal');
+                closeModal('virtue-modal');
+            }
+        });
+        // Close modal on clicking outside content
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(event) {
+                if (event.target === this) { // Check if the click is on the modal backdrop itself
+                    closeModal(this.id);
+                }
+            });
+        });
+
+
+        // Cave Hira steps interaction
+        document.querySelectorAll('#cave-hira .interactive-item').forEach(item => {
+            item.addEventListener('click', () => { // Fixed: Removed underscore from '()_ =>'
+                const detail = item.querySelector('.step-detail');
+                if (detail) {
+                    detail.classList.toggle('hidden');
+                }
+            });
+        });
+
+        // Supporters section Read More toggle
+        window.toggleContent = function(elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.classList.toggle('hidden');
+            }
+        }
+
+        // Modalities Tabs
+        window.openTab = function(event, tabName) {
+            let i, tabcontent, tabbuttons;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+                tabcontent[i].classList.add("hidden"); 
+            }
+            tabbuttons = document.getElementsByClassName("tab-button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            document.getElementById(tabName).classList.remove("hidden");
+            event.currentTarget.classList.add("active");
+        }
+        // Initialize first tab for modalities
+        if (document.querySelector('#modalities-tabs .tab-button')) {
+             document.querySelector('#modalities-tabs .tab-button').click();
+        }
+
+
+        // Prophetic Character Modals
+        const virtuesData = {
+            'virtue-truthfulness': { 
+                title: "Truthfulness & Honesty (الصِّدْق والأمانة)", 
+                text: "Prophet Muhammad (PBUH) was renowned for his truthfulness and honesty long before his prophetic claim. He was known by the title 'Al-Amin' (the trustworthy). When Heraclius asked Abu Sufyan if Muhammad had ever been accused of lying BEFORE his claim, Abu Sufyan (then an enemy) said 'No.' Heraclius remarked, 'I wondered how a person who does not tell a lie about others could ever tell a lie about Allah.'" 
+            },
+            'virtue-reliability': { 
+                title: "Reliability & Promise-Keeping", 
+                text: "He was known for his reliability and always kept his promises. Heraclius asked Abu Sufyan if the Prophet (PBUH) ever broke his promises, to which Abu Sufyan replied, 'No.' Heraclius affirmed this is a characteristic of apostles: 'likewise the Apostles never betray.'" 
+            },
+            'virtue-generosity': { 
+                title: "Generosity (الْكَرَم)", 
+                text: "Ibn 'Abbas described him as 'the most generous of all the people,' and his generosity peaked in Ramadan when Gabriel met him, becoming 'even more generous than the strong uncontrollable wind' in his readiness to do charitable deeds." 
+            },
+            'virtue-compassion': { 
+                title: "Compassion & Social Responsibility", 
+                text: "His compassion was evident in his pre-prophetic life. Khadija (RA) comforted him after the first revelation by listing his virtues: 'You keep good relations with your kith and kin, help the poor and the destitute, serve your guests generously and assist the deserving calamity-afflicted ones.'" 
+            },
+            'virtue-humility': { 
+                title: "Humility (التَّوَاضُع)", 
+                text: "His genuine humility was clear in his response to the angel's command to 'Read!' with 'I do not know how to read.' This lack of pretense made the subsequent divine revelation even more miraculous and clearly of divine origin." 
+            },
+            'virtue-resilience': { 
+                title: "Resilience (الصَّبْر)", 
+                text: "He demonstrated remarkable resilience in the face of the physically and spiritually demanding nature of Wahy. Accounts of him sweating profusely on a cold day or his heart beating severely after receiving revelation highlight his endurance and steadfastness in conveying the divine message." 
+            }
+        };
+
+        window.showModal = function(virtueKey) {
+            if (virtuesData[virtueKey]) {
+                document.getElementById('virtue-modal-title').textContent = virtuesData[virtueKey].title;
+                document.getElementById('virtue-modal-text').innerHTML = virtuesData[virtueKey].text; // Use innerHTML if text contains HTML like <strong>
+                document.getElementById('virtue-modal').classList.add('active');
+            }
+        }
+        
+        // Heraclius Q&A Data
+        const heracliusQnA = [
+            { 
+                q: "What is his family status amongst you?", 
+                a: "He belongs to a good (noble) family amongst us.", 
+                d: "All Apostles come from noble families amongst their respective peoples." 
+            },
+            { 
+                q: "Has anybody amongst you ever claimed the same (i.e. to be a Prophet) before him?", 
+                a: "No.", 
+                d: "If yes, he would be following a previous statement." 
+            },
+            { 
+                q: "Was anybody amongst his ancestors a king?", 
+                a: "No.", 
+                d: "If yes, he would be seeking his ancestral kingdom." 
+            },
+            { 
+                q: "Do the nobles or the poor follow him?", 
+                a: "It is the poor who follow him.", 
+                d: "All Apostles have been followed by this very class of people." 
+            },
+            { 
+                q: "Are his followers increasing or decreasing (day by day)?", 
+                a: "They are increasing.", 
+                d: "This is the way of true faith, till it is complete in all respects." 
+            },
+            { 
+                q: "Does anybody amongst those who embrace his religion become displeased and renounce the religion afterwards?", 
+                a: "No.", 
+                d: "This is (the sign of) true faith, when its delight enters the hearts and mixes with them completely." 
+            },
+            { 
+                q: "Have you ever accused him of telling lies before his claim (to be a Prophet)?", 
+                a: "No.", 
+                d: "A person who does not tell a lie about others could ever tell a lie about Allah." 
+            },
+            { 
+                q: "Does he break his promises?", 
+                a: "No.", 
+                d: "Likewise the Apostles never betray." 
+            },
+            { 
+                q: "What does he order you to do?", 
+                a: "To worship Allah and Allah alone, renounce ancestors' sayings, pray, speak truth, be chaste, keep good relations with kin.", 
+                d: "(Acknowledged these teachings as consistent with prophethood)." 
+            }
+        ];
+
+        const qnaContainer = document.getElementById('heraclius-qna-container');
+        heracliusQnA.forEach((item, index) => {
+            const qnaElement = `
+                <div class="content-card interactive-item p-4" onclick="toggleHeracliusDetail('heraclius-detail-${index}')">
+                    <p class="font-semibold text-amber-700">Question ${index + 1}: <span class="text-stone-800 font-normal">${item.q}</span></p>
+                    <div id="heraclius-detail-${index}" class="hidden mt-3 pt-3 border-t border-stone-200">
+                        <p><strong class="text-stone-600">Abu Sufyan's Response:</strong> ${item.a}</p>
+                        <p class="mt-1"><strong class="text-teal-600">Heraclius's Deduction:</strong> ${item.d}</p>
+                    </div>
+                </div>
+            `;
+            qnaContainer.innerHTML += qnaElement;
+        });
+
+        window.toggleHeracliusDetail = function(detailId) {
+            const detailElement = document.getElementById(detailId);
+            if (detailElement) {
+                detailElement.classList.toggle('hidden');
+            }
+        }
+
+    </script>
+</body>
+</html>

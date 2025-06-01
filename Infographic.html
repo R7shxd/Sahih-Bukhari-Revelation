@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Genesis of Prophethood: An Infographic Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices:
+    - Wahy Intro: Text callouts (Goal: Inform, Method: HTML/CSS). Justification: Direct quotes and key concepts. NO SVG/Mermaid.
+    - Cave Hira: Flowchart (Goal: Organize/Change, Method: HTML/CSS using Tailwind for steps). Justification: Visualizes sequence of events. NO SVG/Mermaid.
+    - Supporters: Profile Cards (Goal: Inform/Compare, Method: HTML/CSS). Justification: Highlights individual roles. NO SVG/Mermaid.
+    - Modalities: Icon-enhanced List/Cards & Donut Chart (Goal: Organize/Compare, Method: HTML/CSS with Unicode icons & Chart.js Canvas). Justification: Clear presentation of different forms and their diversity. (Chart.js includes label wrapping and tooltip config). NO SVG/Mermaid.
+    - Fatrah: Timeline (Goal: Change, Method: HTML/CSS). Justification: Shows progression through the pause. NO SVG/Mermaid.
+    - Prophetic Character: Styled list with icons (Goal: Inform, Method: HTML/CSS with Unicode icons). Justification: Visually appealing list of virtues. NO SVG/Mermaid.
+    - Heraclius's Inquiry: Q&A cards/Styled Table (Goal: Organize/Compare, Method: HTML/CSS). Justification: Interactive/clear display of dialogue. NO SVG/Mermaid.
+    -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #1E293B; }
+        .primary-blue { color: #005A9C; }
+        .bg-primary-blue { background-color: #005A9C; }
+        .border-primary-blue { border-color: #005A9C; }
+        .secondary-blue { color: #0078D4; }
+        .bg-secondary-blue { background-color: #0078D4; }
+        .accent-orange { color: #F76900; }
+        .bg-accent-orange { background-color: #F76900; }
+        .border-accent-orange { border-color: #F76900; }
+        .bg-light-bg { background-color: #F0F4F8; }
+        .section-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 3px solid #F76900; color: #005A9C; }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); padding: 1.5rem; margin-bottom: 1.5rem; }
+        .stat-number { font-size: 3rem; font-weight: 800; color: #F76900; }
+        .arabic-text-sm { font-size: 1rem; line-height: 1.6; direction: rtl; font-family: 'Noto Naskh Arabic', serif; margin-top: 0.25rem; margin-bottom: 0.25rem; color: #4A5568; }
+        .arabic-text-lg { font-size: 1.5rem; line-height: 1.8; direction: rtl; font-family: 'Noto Naskh Arabic', serif; margin-top: 0.5rem; margin-bottom: 0.5rem; color: #005A9C; }
+        .chart-container { position: relative; width: 100%; max-width: 450px; margin-left: auto; margin-right: auto; height: 300px; max-height: 350px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; max-height: 400px; } }
+        .flowchart-step { border-left: 4px solid #0078D4; padding-left: 1rem; margin-bottom: 1rem; position: relative; }
+        .flowchart-step::before { content: counter(step-counter); counter-increment: step-counter; background-color: #0078D4; color: white; border-radius: 50%; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; font-weight: bold; position: absolute; left: -1rem; top: 0; }
+        .timeline-item { position: relative; padding-left: 2.5rem; padding-bottom: 2rem; border-left: 3px solid #0078D4; }
+        .timeline-item:last-child { border-left: 3px solid transparent; padding-bottom: 0; }
+        .timeline-dot { position: absolute; left: -0.6rem; top: 0.1rem; height: 1rem; width: 1rem; background-color: #F76900; border-radius: 50%; border: 2px solid white; }
+        .sticky-nav { position: -webkit-sticky; position: sticky; top: 0; z-index: 50; background-color: rgba(255,255,255,0.95); backdrop-filter: blur(5px); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .nav-link.active { color: #F76900; border-bottom: 2px solid #F76900; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="sticky-nav py-3 mb-8">
+        <div class="container mx-auto px-6">
+            <nav class="flex flex-wrap items-center justify-center space-x-4 sm:space-x-6">
+                <a href="#section1" class="nav-link text-sm font-medium text-gray-700 hover:text-accent-orange py-1">Wahy Overview</a>
+                <a href="#section2" class="nav-link text-sm font-medium text-gray-700 hover:text-accent-orange py-1">First Revelation</a>
+                <a href="#section3" class="nav-link text-sm font-medium text-gray-700 hover:text-accent-orange py-1">Key Supporters</a>
+                <a href="#section4" class="nav-link text-sm font-medium text-gray-700 hover:text-accent-orange py-1">Modalities</a>
+                <a href="#section5" class="nav-link text-sm font-medium text-gray-700 hover:text-accent-orange py-1">The Fatrah</a>
+                <a href="#section6" class="nav-link text-sm font-medium text-gray-700 hover:text-accent-orange py-1">Prophetic Character</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-6 py-8">
+
+        <section id="section1" class="mb-16 scroll-mt-20">
+            <h2 class="section-title">1. Market Overview: The "Divine Guidance" Sector</h2>
+            <p class="text-lg mb-6 text-gray-700">This report analyzes the foundational events of Prophet Muhammad's (PBUH) divine commission, drawing from Sahih al-Bukhari. Understanding the "source" and "delivery mechanism" of this guidance is crucial.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-2xl font-semibold primary-blue mb-3">Core Concept: Wahy (Revelation)</h3>
+                    <p class="mb-3">Wahy is the unique, authoritative communication from Allah to His prophets. It's the bedrock of Islamic faith, legitimizing the prophetic mission and the Qur'an's origin.</p>
+                    <div class="bg-light-bg p-4 rounded-lg">
+                        <p class="font-semibold secondary-blue">Key Statistic (Qur'an 4:163):</p>
+                        <p class="italic text-gray-600">"Verily, We have sent the revelation to you (O Muhammad) as We sent the revelation to Noah and the Prophets after him."</p>
+                        <p class="arabic-text-sm">إِنَّا أَوْحَيْنَا إِلَيْكَ كَمَا أَوْحَيْنَا إِلَى نُوحٍ وَالنَّبِيِّينَ مِنْ بَعْدِهِ</p>
+                        <p class="mt-2 text-sm text-gray-700">This establishes a <strong class="accent-orange">Continuity of Prophethood</strong>, linking Prophet Muhammad (PBUH) to a universal divine plan.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-2xl font-semibold primary-blue mb-3">Foundational Principle: Intention</h3>
+                    <p class="mb-3">The very first Hadith in Sahih al-Bukhari, following the introduction to revelation, emphasizes the centrality of intention (Niyyah).</p>
+                    <div class="bg-light-bg p-4 rounded-lg">
+                        <p class="font-semibold secondary-blue">Core Tenet (Sahih al-Bukhari 1):</p>
+                        <p class="italic text-gray-600">"The reward of deeds depends upon the intentions..."</p>
+                        <p class="arabic-text-sm">إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ</p>
+                        <p class="mt-2 text-sm text-gray-700">This implies that receiving and conveying revelation, and all actions based on it, must be rooted in <strong class="accent-orange">pure intention for Allah</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section2" class="mb-16 scroll-mt-20">
+            <h2 class="section-title">2. "Product Launch": The First Revelation at Cave Hira</h2>
+            <p class="text-lg mb-6 text-gray-700">The formal commencement of prophethood was a meticulously orchestrated divine event, preceded by spiritual preparation.</p>
+            <div class="card md:col-span-2">
+                <h3 class="text-2xl font-semibold primary-blue mb-4">Sequence of the First Divine Encounter:</h3>
+                <div style="counter-reset: step-counter;">
+                    <div class="flowchart-step">
+                        <h4 class="font-semibold text-lg secondary-blue">Pre-Launch: Spiritual Retreat</h4>
+                        <p>Prophet Muhammad (PBUH) frequently engaged in solitary worship in the Cave of Hira, fostering spiritual receptiveness.</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <h4 class="font-semibold text-lg secondary-blue">The Command: "Read!" (اقْرَأْ)</h4>
+                        <p>Angel Gabriel appears and commands him to read. The Prophet, being unlettered, replies, "I do not know how to read." (مَا أَنَا بِقَارِئٍ)</p>
+                        <p class="text-sm text-gray-600 mt-1">This illiteracy underscores the miraculous nature of the Qur'anic revelation.</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <h4 class="font-semibold text-lg secondary-blue">The Overwhelming Experience</h4>
+                        <p>The angel presses him forcefully three times, each met with the same response. This physical intensity confirmed the reality of the supernatural encounter.</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <h4 class="font-semibold text-lg secondary-blue">"Product Unveiled": First Verses</h4>
+                        <p>Angel Gabriel recites Qur'an 96:1-3:</p>
+                        <p class="italic text-gray-700 mt-1">"'Read in the name of your Lord, who has created (all that exists), created man from a clot. Read! And your Lord is the Most Generous.'"</p>
+                        <p class="arabic-text-lg">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ. خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ. اقْرَأْ وَرَبُّكَ الْأَكْرَمُ</p>
+                    </div>
+                    <div class="flowchart-step">
+                        <h4 class="font-semibold text-lg secondary-blue">Initial "Market" Reaction</h4>
+                        <p>The Prophet returns to Khadija, heart beating severely, seeking comfort: "Cover me! Cover me!" This highlights the profound impact of the experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section3" class="mb-16 scroll-mt-20">
+            <h2 class="section-title">3. Key Stakeholders & Early Adopters: Pillars of Support</h2>
+            <p class="text-lg mb-6 text-gray-700">Immediate validation and support were crucial in the face of this overwhelming divine experience.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-2xl font-semibold primary-blue mb-1">Khadija bint Khuwailid (RA)</h3>
+                    <p class="text-sm accent-orange font-medium mb-3">The First Believer & Primary Supporter</p>
+                    <img src="https://placehold.co/600x300/005A9C/FFFFFF?text=Khadija+(RA)+-+Unwavering+Support" alt="Khadija's Support" class="rounded-md mb-4 w-full h-auto object-cover max-h-48">
+                    <p class="mb-2">Provided immediate emotional and psychological anchoring. Reassured the Prophet (PBUH) by citing his exemplary character:</p>
+                    <blockquote class="italic border-l-4 border-accent-orange pl-4 py-2 my-2 text-gray-700">
+                        "Never! By Allah, Allah will never disgrace you. You keep good relations with your kith and kin, help the poor... serve your guests generously..."
+                    </blockquote>
+                    <p>Her actions demonstrated wisdom and proactive validation.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-2xl font-semibold primary-blue mb-1">Waraqa bin Naufal</h3>
+                    <p class="text-sm accent-orange font-medium mb-3">Theological Validation & Prophetic Insight</p>
+                    <img src="https://placehold.co/600x300/0078D4/FFFFFF?text=Waraqa+bin+Naufal+-+Scholarly+Confirmation" alt="Waraqa's Confirmation" class="rounded-md mb-4 w-full h-auto object-cover max-h-48">
+                    <p class="mb-2">A Christian scholar knowledgeable in scriptures. Identified the angel as Gabriel (the one sent to Moses), linking the experience to established prophetic tradition.</p>
+                    <blockquote class="italic border-l-4 border-accent-orange pl-4 py-2 my-2 text-gray-700">
+                        "This is the same one who keeps the secrets (angel Gabriel) whom Allah had sent to Moses."
+                    </blockquote>
+                    <p>Foretold the opposition Prophet Muhammad (PBUH) would face, offering crucial foresight.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="section4" class="mb-16 scroll-mt-20">
+            <h2 class="section-title">4. "Product Features & Delivery": Modalities of Wahy</h2>
+            <p class="text-lg mb-6 text-gray-700">Divine revelation manifested in diverse forms, each with unique characteristics and impact.</p>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="card md:col-span-2">
+                    <h3 class="text-xl font-semibold primary-blue mb-4">Forms of Divine Inspiration:</h3>
+                    <ul class="space-y-3">
+                        <li><strong class="secondary-blue">✨ Good Dreams:</strong> True like bright daylight; a gentle, preparatory phase.</li>
+                        <li><strong class="secondary-blue">🔔 Ringing of a Bell:</strong> The hardest form, intense sensory experience, causing physical burden (e.g., sweat on a cold day).</li>
+                        <li><strong class="secondary-blue">🗣️ Angel in Human Form:</strong> Gabriel appearing as a man, allowing direct conversation and comprehension.</li>
+                        <li><strong class="secondary-blue">☁️ Voice from the Sky:</strong> Hearing a voice, sometimes seeing Gabriel (e.g., on a chair between sky and earth).</li>
+                        <li><strong class="secondary-blue">📜 Gabriel Teaching Qur'an:</strong> Regular meetings in Ramadan for instruction and review.</li>
+                    </ul>
+                     <div class="mt-6 bg-light-bg p-4 rounded-lg">
+                        <h4 class="font-semibold text-lg primary-blue mb-2">"Quality Assurance": Divine Preservation</h4>
+                        <p class="text-gray-700">Allah assured the Prophet (PBUH) regarding the Qur'an's collection and clarity (Qur'an 75:16-19), alleviating his burden of memorization.</p>
+                        <p class="italic text-sm text-gray-600 mt-1">"Move not your tongue... It is for Us to collect it and to give you... the ability to recite it... Then it is for Us to make it clear..."</p>
+                        <p class="arabic-text-sm mt-1">لَا تُحَرِّكْ بِهِ لِسَانَكَ لِتَعْجَلَ بِهِ...</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold primary-blue mb-4">Diversity of Revelation</h3>
+                    <p class="text-sm text-gray-600 mb-3">The varied forms of Wahy highlight a divine pedagogical approach, tailored to the Prophet (PBUH) and the message.</p>
+                    <div class="chart-container">
+                        <canvas id="modalitiesChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center mt-2 text-gray-500">Conceptual representation of diverse revelation modalities.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="section5" class="mb-16 scroll-mt-20">
+            <h2 class="section-title">5. "Market Interruption & Relaunch": The Fatrah Period</h2>
+            <p class="text-lg mb-6 text-gray-700">A temporary pause in revelation (*Fatrah*) served as a period of spiritual consolidation, followed by a significant resumption and shift in mission.</p>
+            <div class="card">
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h4 class="font-semibold text-lg secondary-blue mb-1">Initial Revelations & Support</h4>
+                        <p class="text-sm text-gray-600">Events of Hira, support from Khadija & Waraqa.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h4 class="font-semibold text-lg secondary-blue mb-1">The Pause (*Fatrah*)</h4>
+                        <p class="text-sm text-gray-600">Divine inspiration paused for a while after Waraqa's passing. This created longing and allowed for processing the initial experiences.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h4 class="font-semibold text-lg secondary-blue mb-1">The Resumption: A Powerful Vision</h4>
+                        <p class="text-sm text-gray-600">Prophet (PBUH) sees the same angel from Hira on a chair between sky and earth, signaling the end of *Fatrah*.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h4 class="font-semibold text-lg accent-orange mb-1">"Mission Upgrade": Arise and Warn!</h4>
+                        <p class="text-sm text-gray-600">Revelation of Surah Al-Muddaththir (Qur'an 74:1-5):</p>
+                        <p class="italic text-xs text-gray-500 mt-1">"'O you wrapped up! Arise and warn... and desert the idols.'"</p>
+                        <p class="arabic-text-sm mt-1">يَا أَيُّهَا الْمُدَّثِّرُ. قُمْ فَأَنذِرْ...</p>
+                        <p class="text-sm text-gray-600 mt-1">This marked the shift from personal reception to <strong class="primary-blue">public ministry and active da'wah</strong>. Revelation then continued strongly and regularly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section6" class="mb-16 scroll-mt-20">
+            <h2 class="section-title">6. "Brand Reputation & Trust": Prophetic Character & External Validation</h2>
+            <p class="text-lg mb-6 text-gray-700">The Prophet's (PBUH) impeccable character and compelling external testimonies formed a strong basis for the acceptance of his message.</p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-semibold primary-blue mb-4">Core Virtues ("Brand Values"):</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li><span class="accent-orange font-bold">✓</span> Truthfulness & Honesty (Al-Amin)</li>
+                        <li><span class="accent-orange font-bold">✓</span> Reliability & Promise-Keeping</li>
+                        <li><span class="accent-orange font-bold">✓</span> Unparalleled Generosity</li>
+                        <li><span class="accent-orange font-bold">✓</span> Compassion & Social Responsibility</li>
+                        <li><span class="accent-orange font-bold">✓</span> Genuine Humility</li>
+                        <li><span class="accent-orange font-bold">✓</span> Remarkable Resilience</li>
+                    </ul>
+                    <p class="mt-4 text-sm text-gray-600">These virtues were recognized even by adversaries, forming a bedrock of trust.</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold primary-blue mb-4">"Independent Audit": Heraclius's Inquiry</h3>
+                    <p class="text-sm text-gray-600 mb-3">The Byzantine Emperor Heraclius questioned Abu Sufyan (then an opponent) about Prophet Muhammad (PBUH). Key findings:</p>
+                    <div class="bg-light-bg p-3 rounded-md text-sm">
+                        <p><strong class="secondary-blue">Family Status:</strong> Noble.</p>
+                        <p><strong class="secondary-blue">Prior Claims:</strong> None before him.</p>
+                        <p><strong class="secondary-blue">Ancestry:</strong> No kings among ancestors.</p>
+                        <p><strong class="secondary-blue">Followers:</strong> Initially the poor, but followers increasing.</p>
+                        <p><strong class="secondary-blue">Apostasy:</strong> None renounce the religion after embracing it.</p>
+                        <p><strong class="secondary-blue">Accusation of Lying (Pre-Claim):</strong> Never.</p>
+                        <p><strong class="secondary-blue">Broken Promises:</strong> Never.</p>
+                        <p><strong class="secondary-blue">Teachings:</strong> Worship Allah alone, truthfulness, chastity, good relations.</p>
+                    </div>
+                    <p class="mt-3 font-semibold accent-orange">Heraclius's Conclusion:</p>
+                    <blockquote class="italic text-gray-700 border-l-4 border-accent-orange pl-3 py-1 text-sm">"If what you have said is true, he will very soon occupy this place underneath my feet... I would certainly wash his feet."</blockquote>
+                    <p class="text-xs text-gray-500 mt-1">This powerful external validation from a learned non-Muslim ruler affirmed the universal signs of prophethood.</p>
+                </div>
+            </div>
+        </section>
+
+         <section id="section7" class="scroll-mt-20">
+            <h2 class="section-title">7. Conclusion: Market Impact & Enduring Significance</h2>
+            <div class="card">
+                <p class="text-lg mb-4 text-gray-700">The early revelations and associated events, as documented in Sahih al-Bukhari, establish a robust framework for understanding the divine origin and authenticity of Prophet Muhammad's (PBUH) mission. They form the bedrock of Islamic faith.</p>
+                <div class="space-y-3 text-gray-600">
+                    <p><strong class="primary-blue">✓ Divine Origin Confirmed:</strong> Through intense personal experiences, miraculous elements (illiteracy vs. profound scripture), and diverse modalities of Wahy.</p>
+                    <p><strong class="primary-blue">✓ Multi-layered Validation:</strong> Combining internal prophetic experiences with crucial external support (Khadija, Waraqa) and objective non-Muslim testimony (Heraclius).</p>
+                    <p><strong class="primary-blue">✓ Core Tenets Established:</strong> Oneness of Allah, divine source of Qur'an, exemplary prophetic character.</p>
+                    <p><strong class="primary-blue">✓ Qur'anic Preservation Guaranteed:</strong> Divine assurance from the outset (Qur'an 75:16-19).</p>
+                    <p><strong class="primary-blue">✓ Mission Progression Defined:</strong> From personal reception ("Read!") to public call ("Arise and Warn!"), guided by divine wisdom through periods like *Fatrah*.</p>
+                    <p><strong class="primary-blue">✓ Human Dimension of Prophethood:</strong> Acknowledging initial fear and need for reassurance, making the prophetic journey relatable and his steadfastness more remarkable.</p>
+                </div>
+                <p class="mt-6 text-md font-semibold text-accent-orange">These foundational narratives are not mere historical accounts but a continuing source of guidance, inspiration, and affirmation for believers worldwide.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-primary-blue text-white text-center py-6 mt-12">
+        <p>&copy; <span id="currentYear"></span> Genesis of Prophethood Infographic. All data derived from Sahih al-Bukhari, Kitab Bad' al-Wahy.</p>
+        <p class="text-xs opacity-75">For educational and informational purposes.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Helper function for Chart.js label wrapping
+        function wrapText(text, maxWidth) {
+            if (typeof text !== 'string') return text; // Return as is if not a string (e.g., already an array)
+            const words = text.split(' ');
+            let lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + ' ' + words[i]).length < maxWidth) {
+                    currentLine += ' ' + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // Modalities Donut Chart
+        const ctxModalities = document.getElementById('modalitiesChart');
+        if (ctxModalities) {
+            const modalitiesData = {
+                labels: [
+                    'Good Dreams', 
+                    'Ringing of Bell', 
+                    'Angel in Human Form', 
+                    'Voice from the Sky', 
+                    wrapText('Gabriel Teaching Qur\'an', 16) // Example of wrapping
+                ],
+                datasets: [{
+                    label: 'Forms of Revelation',
+                    data: [1, 1, 1, 1, 1], // Equal segments to show diversity
+                    backgroundColor: [
+                        '#F76900', // Accent Orange
+                        '#0078D4', // Secondary Blue
+                        '#FFA500', // Lighter Orange/Gold
+                        '#41A5E1', // Lighter Blue
+                        '#005A9C', // Primary Blue
+                    ],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 2
+                }]
+            };
+            new Chart(ctxModalities, {
+                type: 'doughnut',
+                data: modalitiesData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 10 },
+                                boxWidth: 15,
+                                padding: 10,
+                                 // Custom label formatter if needed for wrapped text display in legend
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map(function(label, i) {
+                                            const meta = chart.getDatasetMeta(0);
+                                            const style = meta.controller.getStyle(i);
+                                            return {
+                                                text: Array.isArray(label) ? label.join(' ') : label, // Join wrapped label for legend
+                                                fillStyle: style.backgroundColor,
+                                                strokeStyle: style.borderColor,
+                                                lineWidth: style.borderWidth,
+                                                hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden,
+                                                index: i
+                                            };
+                                        });
+                                    }
+                                    return [];
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                      return label.join(' ');
+                                    } else {
+                                      return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Sticky Nav Active Link highlighting
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        }
+
+        function changeNav() {
+            let index = sections.length;
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            const navHeight = document.querySelector('.sticky-nav').offsetHeight;
+
+            while(--index && scrollY + navHeight + 50 < sections[index].offsetTop) {}
+            
+            navLinks.forEach((link) => link.classList.remove('active'));
+            const activeLink = document.querySelector(`.nav-link[href="#${sections[index].id}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+        
+        window.addEventListener('scroll', throttle(changeNav, 100));
+        changeNav(); // Initial call
+
+        // Smooth scroll for nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navHeight = document.querySelector('.sticky-nav').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - navHeight - 10; // Adjusted offset
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

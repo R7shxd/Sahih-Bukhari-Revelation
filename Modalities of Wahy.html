@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modalities of Wahy Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F0F4F8; color: #1E293B; }
+        .primary-blue { color: #005A9C; }
+        .bg-primary-blue { background-color: #005A9C; }
+        .border-primary-blue { border-color: #005A9C; }
+        .secondary-blue { color: #0078D4; }
+        .bg-secondary-blue { background-color: #0078D4; }
+        .accent-orange { color: #F76900; }
+        .bg-accent-orange { background-color: #F76900; }
+        .border-accent-orange { border-color: #F76900; }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); padding: 1.5rem; margin-bottom: 1.5rem; }
+        .tab-button { padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; background-color: #E0E7EB; color: #1E293B; }
+        .tab-button.active { background-color: #0078D4; color: white; }
+        .tab-button:hover:not(.active) { background-color: #CBD5E1; }
+        .tab-content { display: none; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease-out, transform 0.4s ease-out; }
+        .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
+        .arabic-text { font-size: 1.1rem; line-height: 1.8; direction: rtl; font-family: 'Noto Naskh Arabic', serif; margin-top: 0.5rem; margin-bottom: 0.5rem; color: #4A5568; }
+
+        /* Subtle Animations for Visual Cues */
+        .visual-cue { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 1rem; font-size: 2.5rem; }
+
+        /* Good Dreams: Gentle Pulse */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(247, 105, 0, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(247, 105, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(247, 105, 0, 0); }
+        }
+        .dreams-cue { animation: pulse-glow 2s infinite; background-color: #FFFBEB; color: #F76900; }
+
+        /* Ringing Bell: Shake */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        .bell-cue { animation: shake 0.5s infinite; background-color: #E0F2F7; color: #0078D4; }
+
+        /* Angel in Human Form: Fade-in Scale */
+        @keyframes fade-scale-in {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .angel-cue { animation: fade-scale-in 0.6s ease-out forwards; background-color: #F3E5F5; color: #A020F0; /* Purple for angelic presence */ }
+
+        /* Voice from Sky: Floating Wave */
+        @keyframes float-wave {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        .voice-cue { animation: float-wave 2s infinite ease-in-out; background-color: #E1F5FE; color: #005A9C; }
+
+        /* Gabriel Teaching Qur'an: Subtle Fade */
+        @keyframes subtle-fade {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+        .teaching-cue { animation: subtle-fade 1s ease-in-out forwards; background-color: #E8F5E9; color: #28a745; /* Green for growth/knowledge */ }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-center primary-blue mb-6">Modalities of Wahy: Interactive Guide</h1>
+        <p class="text-lg text-center text-gray-700 mb-8 max-w-3xl mx-auto">Divine revelation to Prophet Muhammad (PBUH) manifested in various forms, each with unique characteristics and impact. Explore each modality below.</p>
+
+        <div class="card max-w-4xl mx-auto">
+            <div class="flex flex-wrap justify-center gap-3 mb-6">
+                <button class="tab-button active" data-tab="dreams">Good Dreams</button>
+                <button class="tab-button" data-tab="bell">Ringing of a Bell</button>
+                <button class="tab-button" data-tab="angel">Angel in Human Form</button>
+                <button class="tab-button" data-tab="voice">Voice from the Sky</button>
+                <button class="tab-button" data-tab="teaching">Gabriel Teaching Qur'an</button>
+            </div>
+
+            <div id="tab-dreams" class="tab-content active">
+                <div class="visual-cue dreams-cue">✨</div>
+                <h3 class="text-2xl font-semibold secondary-blue text-center mb-4">Good Dreams (الرؤيا الصالحة)</h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">This was the very first form of Divine Inspiration Prophet Muhammad (PBUH) received. These dreams were clear, vivid, and always came true, serving as a gentle and preparatory introduction to the profound experience of Wahy.</p>
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-accent-orange">
+                    <p class="font-semibold accent-orange mb-2">Prophet's Experience & Quote:</p>
+                    <p class="italic text-gray-700 mb-2">"The first form of Divine Inspiration which Allah's Messenger (PBUH) received was true dreams which used to come true like bright daylight."</p>
+                    <p class="arabic-text">أَوَّلُ مَا بُدِئَ بِهِ رَسُولُ اللَّهِ صلى الله عليه وسلم مِنَ الْوَحْىِ الرُّؤْيَا الصَّالِحَةُ فِي النَّوْمِ، فَكَانَ لاَ يَرَى رُؤْيَا إِلاَّ جَاءَتْ مِثْلَ فَلَقِ الصُّبْحِ</p>
+                    <p class="text-sm text-gray-500 mt-2">(Sahih al-Bukhari)</p>
+                </div>
+            </div>
+
+            <div id="tab-bell" class="tab-content">
+                <div class="visual-cue bell-cue">🔔</div>
+                <h3 class="text-2xl font-semibold secondary-blue text-center mb-4">Ringing of a Bell (صلصلة الجرس)</h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">This was described by the Prophet (PBUH) as the hardest and most intense form of revelation. It was accompanied by a profound auditory and sensory experience, placing an immense spiritual and physical burden upon him.</p>
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-accent-orange">
+                    <p class="font-semibold accent-orange mb-2">Prophet's Experience & Quote:</p>
+                    <p class="italic text-gray-700 mb-2">"Sometimes it is (revealed) like the ringing of a bell, this form of Inspiration is the hardest of all and then this state passes away after I have grasped what is inspired. Sometimes the Angel comes in the form of a man and talks to me and I grasp all that he says."</p>
+                    <p class="arabic-text">أَحْيَانًا يَأْتِينِي مِثْلَ صَلْصَلَةِ الْجَرَسِ، وَهُوَ أَشَدُّهُ عَلَىَّ، فَيُفْصَمُ عَنِّي وَقَدْ وَعَيْتُ عَنْهُ مَا قَالَ، وَأَحْيَانًا يَتَمَثَّلُ لِي الْمَلَكُ رَجُلاً فَيُكَلِّمُنِي فَأَعِي مَا يَقُولُ</p>
+                    <p class="text-sm text-gray-500 mt-2">(Prophet Muhammad (PBUH), Sahih al-Bukhari)</p>
+                    <p class="mt-2 text-sm text-gray-600">The Prophet (PBUH) would often sweat profusely even on a very cold day during this type of revelation, indicating its immense physical toll.</p>
+                </div>
+            </div>
+
+            <div id="tab-angel" class="tab-content">
+                <div class="visual-cue angel-cue">👤</div>
+                <h3 class="text-2xl font-semibold secondary-blue text-center mb-4">Angel in Human Form</h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">In this modality, Angel Gabriel would appear in the form of a man and engage in direct conversation with Prophet Muhammad (PBUH). This form allowed for clearer comprehension and was generally a more accessible way for the Prophet to receive the divine message.</p>
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-accent-orange">
+                    <p class="font-semibold accent-orange mb-2">Prophet's Experience & Quote:</p>
+                    <p class="italic text-gray-700 mb-2">"Sometimes the Angel comes in the form of a man and talks to me and I grasp all that he says."</p>
+                    <p class="arabic-text">وَأَحْيَانًا يَتَمَثَّلُ لِي الْمَلَكُ رَجُلاً فَيُكَلِّمُنِي فَأَعِي مَا يَقُولُ</p>
+                    <p class="text-sm text-gray-500 mt-2">(Prophet Muhammad (PBUH), Sahih al-Bukhari)</p>
+                    <p class="mt-2 text-sm text-gray-600">This form is notable for its clarity and directness, making it easier for the Prophet to receive and understand the revelation.</p>
+                </div>
+            </div>
+
+            <div id="tab-voice" class="tab-content">
+                <div class="visual-cue voice-cue">☁️</div>
+                <h3 class="text-2xl font-semibold secondary-blue text-center mb-4">Voice from the Sky</h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">This form of revelation involved the Prophet (PBUH) hearing a voice from the sky. On some occasions, this was accompanied by a visual manifestation of Angel Gabriel, such as seeing him seated on a chair between the sky and the earth. This specific experience is notably linked to the resumption of revelation after the *Fatrah* period.</p>
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-accent-orange">
+                    <p class="font-semibold accent-orange mb-2">Prophet's Experience & Quote:</p>
+                    <p class="italic text-gray-700 mb-2">"While I was walking, I heard a voice from the sky. I looked up and saw the same angel who had visited me at the Cave of Hira sitting on a chair between the sky and the earth."</p>
+                    <p class="arabic-text">بَيْنَا أَنَا أَمْشِي سَمِعْتُ صَوْتًا مِنَ السَّمَاءِ، فَرَفَعْتُ بَصَرِي، فَإِذَا الْمَلَكُ الَّذِي جَاءَنِي بِحِرَاءٍ جَالِسٌ عَلَى كُرْسِيٍّ بَيْنَ السَّمَاءِ وَالأَرْضِ</p>
+                    <p class="text-sm text-gray-500 mt-2">(Prophet Muhammad (PBUH), Sahih al-Bukhari)</p>
+                    <p class="mt-2 text-sm text-gray-600">This experience could be initially frightening due to its grandeur and suddenness, prompting the Prophet to seek covering.</p>
+                </div>
+            </div>
+
+            <div id="tab-teaching" class="tab-content">
+                <div class="visual-cue teaching-cue">📖</div>
+                <h3 class="text-2xl font-semibold secondary-blue text-center mb-4">Gabriel Teaching the Qur'an</h3>
+                <p class="mb-4 text-gray-700 leading-relaxed">Angel Gabriel had a regular practice of meeting Prophet Muhammad (PBUH) every night during the month of Ramadan. During these meetings, Gabriel would teach the Prophet the Qur'an, ensuring its accuracy, proper recitation, and preservation. This was a structured and continuous process of divine instruction.</p>
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-accent-orange">
+                    <p class="font-semibold accent-orange mb-2">Prophet's Experience & Quote:</p>
+                    <p class="italic text-gray-700 mb-2">"Gabriel used to meet him once every year during the month of Ramadan and would stay with him till the month was over, and Allah's Messenger (PBUH) used to recite the Qur'an before him."</p>
+                    <p class="arabic-text">كَانَ جِبْرِيلُ يَلْقَاهُ فِي كُلِّ لَيْلَةٍ مِنْ رَمَضَانَ فَيُدَارِسُهُ الْقُرْآنَ</p>
+                    <p class="text-sm text-gray-500 mt-2">(Sahih al-Bukhari)</p>
+                    <p class="mt-2 text-sm text-gray-600">This consistent review ensured the divine text was perfectly conveyed and memorized, highlighting Allah's guarantee for the Qur'an's preservation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-primary-blue text-white text-center py-6 mt-12">
+        <p>&copy; <span id="currentYear"></span> Modalities of Wahy Interactive Guide. All rights reserved.</p>
+        <p class="text-xs opacity-75 mt-1">Content based on Sahih al-Bukhari, Kitab Bad' al-Wahy.</p>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        function openTab(event) {
+            const targetTabId = event.currentTarget.dataset.tab;
+
+            // Remove 'active' from all buttons and hide all content
+            tabButtons.forEach(button => button.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Add 'active' to the clicked button and show the target content
+            event.currentTarget.classList.add('active');
+            document.getElementById(`tab-${targetTabId}`).classList.add('active');
+
+            // Remove and re-add animation classes to restart them
+            const visualCue = document.getElementById(`tab-${targetTabId}`).querySelector('.visual-cue');
+            if (visualCue) {
+                const animationClass = visualCue.classList.item(1); // Assuming the second class is the animation one
+                visualCue.classList.remove(animationClass);
+                void visualCue.offsetWidth; // Trigger reflow to restart animation
+                visualCue.classList.add(animationClass);
+            }
+        }
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', openTab);
+        });
+
+        // Initialize the first tab as active on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (tabButtons.length > 0) {
+                tabButtons[0].click();
+            }
+        });
+    </script>
+</body>
+</html>
